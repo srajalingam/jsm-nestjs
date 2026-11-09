@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UserService } from './user.service.js';
+import { RoleGuard } from '../guards/role.guard.js';
 
 // const users: { id: number; name: string }[] = [
 //         { id: 1, name: 'John Doe' },
@@ -40,6 +41,19 @@ export class UserController {
         return {
             data:{id: userId, ...updateUserDto}, 
             message: 'User updated successfully'
+        };
+    }
+
+    
+    //@Delete(':id')
+    //url is http://localhost:3000/user/1
+    @Delete(':id')
+    @UseGuards(RoleGuard)
+    deleteUser(@Param('id') id: string) {
+        const userId = Number(id);
+        return {
+            data:{id: userId}, 
+            message: 'User deleted successfully'
         };
     }
 }
