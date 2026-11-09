@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 
 const users: { id: number; name: string }[] = [
         { id: 1, name: 'John Doe' },
@@ -18,5 +18,11 @@ export class UserController {
     getUserByQueryParam(@Query('id') id: string) {
         const userId = Number(id);
         return users.filter(user => user.id === userId);
+    }
+
+    //Param
+    @Get(':id')
+    getUserByParam(@Param('id') id: string) {
+       return{ id: id, name: 'John Doe' };
     }
 }
