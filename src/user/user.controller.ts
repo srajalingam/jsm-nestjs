@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto.js';
 
 const users: { id: number; name: string }[] = [
@@ -30,5 +30,12 @@ export class UserController {
     @Post()
     createUser(@Body() createUserDto: CreateUserDto) {
         return {data: createUserDto, message: 'User created successfully'};
+    }
+    @Put(':id')
+    updateUser(@Param('id') id: string, @Body() updateUserDto: CreateUserDto) {
+        return {
+            data:{id: id, ...updateUserDto}, 
+            message: 'User updated successfully'
+        };
     }
 }
